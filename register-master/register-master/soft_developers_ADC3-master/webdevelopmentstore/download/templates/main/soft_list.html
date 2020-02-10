@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+
+
+<form method="get" class="search-bar">
+	<input type="text" name="q" placeholder="search.." value="{{query}}">
+	
+</form>
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Name</th>
+				<th>Download</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		{% if software %}
+		<tbody>
+			{% for s in software %}
+			<tr>
+				<td>{{s.title}}</td>
+				<td>{{s.name}}</td>
+				<td><a class="btn btn-primary btn-sm" href="{{s.stw.url}}">Download STW</a></td>
+				<td>
+					<form method="POST" action="{% url 'download:delete_stw' s.pk %}">
+						
+						{% csrf_token %}
+						<button type="submit" class="btn btn-primary">Delete STW</button>
+					</form>
+				</td>
+			</tr>
+			{% endfor %}
+
+			{% else%}
+			<div class="container">
+				<dir class="row">
+					<div class="card-body">
+						<h1 class="card-title"> No Result</h1>
+
+					</div>
+
+				</dir> 
+			</div>
+		</tbody>
+			{% endif %}
+	</table>
+
+{% endblock %}
