@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Software Store.</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link href="{% static 'css/style.css'%}" rel="stylesheet" type="text/css" />
+<script language="javascript" type="text/javascript">
+function clearText(field)
+{
+if (field.defaultValue == field.value) field.value = '';
+else if (field.value == '') field.value = field.defaultValue;
+}
+</script>
+</head>
+<body>
+<div id="container">
+  <div id="header_panel">
+    <div id="site_title">
+		<h1>Software <span>Store.</span></h1>
+      <h2>Free Software Download</h2>
+    </div>
+    <div id="search_box">
+      <form method="get" action="#">
+        <input name="keyword" type="text" name="q" value="{{query}}" placeholder="search.." id="searchfield"  onfocus="clearText(this)" onblur="clearText(this)" />
+        <input type="submit" name="submit" id="searchbutton" value="" />
+      </form>
+    </div>
+  </div>
+  <!-- end of header panel -->
+  <div id="banner_panel">
+    <div id="banner_section">
+      <h1>New Website Editor</h1>
+      <p> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Nunc quis sem nec tellus blandit tincidunt. Aliquam tristique lacus in sapien. Aliquam tristique lacus in sapien. </p>
+      <div class="readmore"><a href="#">Read more</a></div>
+    </div>
+    <!-- end of banner section -->
+    <div id="menu_section">
+      <ul>
+        <li><a href="/">01<span>Home</span></a></li>
+        <li><a href="/download/soft_list" class="current">02<span class="current">Download</span></a></li>
+        <li><a href="/download/upload">03<span>Upload</span></a></li>
+        <li><a href="/register">04<span>Register</span></a></li>
+        <li><a href="/login">05<span>Login</span></a></li>
+        <li><a href="#">06<span>About Us</span></a></li>
+      </ul>
+    </div>
+    <!-- end of menu section -->
+  </div>
+  <!-- end of banner panel -->
+  <div id="content_top"></div>
+  <div id="content">
+    <div id="content_left">
+    	
+    <!--	<form method="get" class="search-bar">
+	<input type="text" name="q" placeholder="search.." value="{{query}}"> 
+	
+</form> -->
+
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Name</th>
+				<th>Download</th>
+				<th>Delete</th>
+			</tr>
+		</thead>
+		{% if software %}
+		<tbody>
+			{% for s in software %}
+			<tr>
+				<td>{{s.title}}</td>
+				<td>{{s.name}}</td>
+				<td><a class="btn btn-primary btn-sm" href="{{s.stw.url}}">Download STW</a></td>
+				<td>
+					<form method="POST" action="{% url 'download:delete_stw' s.pk %}">
+						
+						{% csrf_token %}
+						<button type="submit" class="btn btn-primary">Delete STW</button>
+					</form>
+				</td>
+			</tr>
+			{% endfor %}
+
+			{% else%}
+			<div class="container">
+				<dir class="row">
+					<div class="card-body">
+						<h1 class="card-title"> No Result</h1>
+
+					</div>
+
+				</dir> 
+			</div>
+		</tbody>
+			{% endif %}
+	</table>
+	
+    </div>
+</div>
+ <div id="content_bottom"></div>
+  <div id="footer"> <a href="#">Home</a> | <a href="#">Products</a> | <a href="#">Partners</a> | <a href="#">Support</a> | <a href="#">About Us</a> | <a href="#">Contact Us</a><br />
+    Copyright &copy; 2024 <a href="#"><strong>Your Company Name</strong></a> | Designed by TemplateMo</div>
+  <!-- end of footer -->
+</div>
+<!-- end of container -->
+</body>
+</html>
+
+
